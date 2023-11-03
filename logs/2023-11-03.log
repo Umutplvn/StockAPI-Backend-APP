@@ -1,0 +1,2 @@
+127.0.0.1 - - [03/Nov/2023:23:29:51 +0000] "GET / HTTP/1.1" 200 156 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+127.0.0.1 - - [03/Nov/2023:23:29:52 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://127.0.0.1:8000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"

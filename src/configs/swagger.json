@@ -2,9 +2,9 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Flight Reservation API",
-    "description": "Flight Reservation Management System",
-    "termsOfService": "http://www.clarusway.com",
+    "title": "Stock Management API",
+    "description": "Stock Management System",
+    "termsOfService": "http://www.clarusway.com/#",
     "contact": {
       "name": "Clarusway",
       "email": "qadir@clarusway.com"
@@ -20,21 +20,33 @@
     "https"
   ],
   "securityDefinitions": {
-    "JWT": {
+    "Token": {
       "type": "apiKey",
       "in": "header",
       "name": "Authorization",
-      "description": "Enter Your AccessToken (JWT) for Login. Example: <b>Bearer <i>...token...<i></b>"
+      "description": "Simple Token Authentication * Example: <b>Token ...tokenKey...</b>"
+    },
+    "Bearer": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "description": "JWT Authentication * Example: <b>Bearer ...accessToken...</b>"
     }
   },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
-    "/auth/login": {
+    "/account/auth/login": {
       "post": {
         "tags": [
           "Authentication"
         ],
         "summary": "Login",
-        "description": "Login with username and password",
+        "description": "Login with username (or email) and password.",
         "parameters": [
           {
             "name": "body",
@@ -62,48 +74,25 @@
         }
       }
     },
-    "/auth/refresh": {
-      "post": {
-        "tags": [
-          "Authentication"
-        ],
-        "summary": "Token Refresh",
-        "description": "Refresh accessToken with  ",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "token": {
-                  "type": "object",
-                  "properties": {
-                    "refresh": {
-                      "type": "string",
-                      "example": "...refreshToken..."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/auth/logout": {
+    "/account/auth/logout": {
       "get": {
         "tags": [
           "Authentication"
         ],
         "summary": "Logout",
-        "description": "No need any doing for logout. You must deleted Bearer Token from your browser.",
+        "description": "Delete token key.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout",
+        "description": "Delete token key.",
         "responses": {
           "200": {
             "description": "OK"
@@ -150,15 +139,11 @@
                   "type": "string",
                   "example": "test@site.com"
                 },
-                "isActive": {
+                "is_active": {
                   "type": "boolean",
                   "example": true
                 },
-                "isStaff": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "isAdmin": {
+                "is_superadmin": {
                   "type": "boolean",
                   "example": false
                 }
@@ -226,15 +211,11 @@
                   "type": "string",
                   "example": "test@site.com"
                 },
-                "isActive": {
+                "is_active": {
                   "type": "boolean",
                   "example": true
                 },
-                "isStaff": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "isAdmin": {
+                "is_superadmin": {
                   "type": "boolean",
                   "example": false
                 }
@@ -243,8 +224,8 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Accepted"
+          "200": {
+            "description": "OK"
           }
         }
       },
@@ -303,15 +284,11 @@
                   "type": "string",
                   "example": "test@site.com"
                 },
-                "isActive": {
+                "is_active": {
                   "type": "boolean",
                   "example": true
                 },
-                "isStaff": {
-                  "type": "boolean",
-                  "example": false
-                },
-                "isAdmin": {
+                "is_superadmin": {
                   "type": "boolean",
                   "example": false
                 }
@@ -320,18 +297,18 @@
           }
         ],
         "responses": {
-          "202": {
-            "description": "Accepted"
+          "200": {
+            "description": "OK"
           }
         }
       }
     },
-    "/flights/": {
+    "/stock/brands/": {
       "get": {
         "tags": [
-          "Flights"
+          "Brands"
         ],
-        "summary": "List Flights",
+        "summary": "List Brands",
         "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
           "200": {
@@ -341,9 +318,9 @@
       },
       "post": {
         "tags": [
-          "Flights"
+          "Brands"
         ],
-        "summary": "Create Flight",
+        "summary": "Create Brand",
         "description": "",
         "parameters": [
           {
@@ -351,7 +328,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Flight"
+              "$ref": "#/definitions/Brand"
             }
           }
         ],
@@ -362,12 +339,12 @@
         }
       }
     },
-    "/flights/{id}": {
+    "/stock/brands/{id}": {
       "get": {
         "tags": [
-          "Flights"
+          "Brands"
         ],
-        "summary": "Get Single Flight",
+        "summary": "Get Single Brand",
         "description": "",
         "parameters": [
           {
@@ -385,9 +362,9 @@
       },
       "put": {
         "tags": [
-          "Flights"
+          "Brands"
         ],
-        "summary": "Update Flight",
+        "summary": "Update Brand",
         "description": "",
         "parameters": [
           {
@@ -401,21 +378,21 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Flight"
+              "$ref": "#/definitions/Brand"
             }
           }
         ],
         "responses": {
-          "202": {
-            "description": "Accepted"
+          "200": {
+            "description": "OK"
           }
         }
       },
       "delete": {
         "tags": [
-          "Flights"
+          "Brands"
         ],
-        "summary": "Delete Flight",
+        "summary": "Delete Brand",
         "description": "",
         "parameters": [
           {
@@ -436,9 +413,9 @@
       },
       "patch": {
         "tags": [
-          "Flights"
+          "Brands"
         ],
-        "summary": "Update Flight",
+        "summary": "Update Brand",
         "description": "",
         "parameters": [
           {
@@ -452,23 +429,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Flight"
+              "$ref": "#/definitions/Brand"
             }
           }
         ],
         "responses": {
-          "202": {
-            "description": "Accepted"
+          "200": {
+            "description": "OK"
           }
         }
       }
     },
-    "/passengers/": {
+    "/stock/categories/": {
       "get": {
         "tags": [
-          "Passengers"
+          "Categories"
         ],
-        "summary": "List Passengers",
+        "summary": "List Categories",
         "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
           "200": {
@@ -478,9 +455,9 @@
       },
       "post": {
         "tags": [
-          "Passengers"
+          "Categories"
         ],
-        "summary": "Create Passenger",
+        "summary": "Create Category",
         "description": "",
         "parameters": [
           {
@@ -488,7 +465,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Passenger"
+              "$ref": "#/definitions/Category"
             }
           }
         ],
@@ -499,12 +476,12 @@
         }
       }
     },
-    "/passengers/{id}": {
+    "/stock/categories/{id}": {
       "get": {
         "tags": [
-          "Passengers"
+          "Categories"
         ],
-        "summary": "Get Single Passenger",
+        "summary": "Get Single Category",
         "description": "",
         "parameters": [
           {
@@ -522,9 +499,9 @@
       },
       "put": {
         "tags": [
-          "Passengers"
+          "Categories"
         ],
-        "summary": "Update Passenger",
+        "summary": "Update Category",
         "description": "",
         "parameters": [
           {
@@ -538,21 +515,21 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Passenger"
+              "$ref": "#/definitions/Category"
             }
           }
         ],
         "responses": {
-          "202": {
-            "description": "Accepted"
+          "200": {
+            "description": "OK"
           }
         }
       },
       "delete": {
         "tags": [
-          "Passengers"
+          "Categories"
         ],
-        "summary": "Delete Passenger",
+        "summary": "Delete Category",
         "description": "",
         "parameters": [
           {
@@ -573,9 +550,9 @@
       },
       "patch": {
         "tags": [
-          "Passengers"
+          "Categories"
         ],
-        "summary": "Update Passenger",
+        "summary": "Update Category",
         "description": "",
         "parameters": [
           {
@@ -589,23 +566,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Passenger"
+              "$ref": "#/definitions/Category"
             }
           }
         ],
         "responses": {
-          "202": {
-            "description": "Accepted"
+          "200": {
+            "description": "OK"
           }
         }
       }
     },
-    "/reservations/": {
+    "/stock/firms/": {
       "get": {
         "tags": [
-          "Reservations"
+          "Firms"
         ],
-        "summary": "List Reservations",
+        "summary": "List Firms",
         "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
           "200": {
@@ -615,9 +592,9 @@
       },
       "post": {
         "tags": [
-          "Reservations"
+          "Firms"
         ],
-        "summary": "Create Reservation",
+        "summary": "Create Firm",
         "description": "",
         "parameters": [
           {
@@ -625,7 +602,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Reservation"
+              "$ref": "#/definitions/Firm"
             }
           }
         ],
@@ -636,12 +613,12 @@
         }
       }
     },
-    "/reservations/{id}": {
+    "/stock/firms/{id}": {
       "get": {
         "tags": [
-          "Reservations"
+          "Firms"
         ],
-        "summary": "Get Single Reservation",
+        "summary": "Get Single Firm",
         "description": "",
         "parameters": [
           {
@@ -659,9 +636,9 @@
       },
       "put": {
         "tags": [
-          "Reservations"
+          "Firms"
         ],
-        "summary": "Update Reservation",
+        "summary": "Update Firm",
         "description": "",
         "parameters": [
           {
@@ -675,21 +652,21 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Reservation"
+              "$ref": "#/definitions/Firm"
             }
           }
         ],
         "responses": {
-          "202": {
-            "description": "Accepted"
+          "200": {
+            "description": "OK"
           }
         }
       },
       "delete": {
         "tags": [
-          "Reservations"
+          "Firms"
         ],
-        "summary": "Delete Reservation",
+        "summary": "Delete Firm",
         "description": "",
         "parameters": [
           {
@@ -710,9 +687,9 @@
       },
       "patch": {
         "tags": [
-          "Reservations"
+          "Firms"
         ],
-        "summary": "Update Reservation",
+        "summary": "Update Firm",
         "description": "",
         "parameters": [
           {
@@ -726,72 +703,430 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Reservation"
+              "$ref": "#/definitions/Firm"
             }
           }
         ],
         "responses": {
-          "202": {
-            "description": "Accepted"
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/stock/products/": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "List Products",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create Product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/stock/products/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get Single Product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update Product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Delete Product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update Product",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/stock/purchases/": {
+      "get": {
+        "tags": [
+          "Purchases"
+        ],
+        "summary": "List Purchases",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Purchases"
+        ],
+        "summary": "Create Purchase",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Purchase"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/stock/purchases/{id}": {
+      "get": {
+        "tags": [
+          "Purchases"
+        ],
+        "summary": "Get Single Purchase",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Purchases"
+        ],
+        "summary": "Update Purchase",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Purchase"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Purchases"
+        ],
+        "summary": "Delete Purchase",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Purchases"
+        ],
+        "summary": "Update Purchase",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Purchase"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/stock/sales/": {
+      "get": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "List Sales",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Create Sale",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sale"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/stock/sales/{id}": {
+      "get": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Get Single Sale",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Update Sale",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sale"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Delete Sale",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Update Sale",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sale"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
     }
   },
   "definitions": {
-    "/auth/login": {
-      "type": "object",
-      "properties": {
-        "username": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "example": "String"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
-        "password": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "example": "String"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        }
-      }
-    },
-    "/auth/refresh": {
-      "type": "object",
-      "properties": {
-        "token.refresh": {
-          "type": "object",
-          "properties": {
-            "description": {
-              "type": "string",
-              "example": "{ token: { refresh: ... } }"
-            },
-            "type": {
-              "type": "string",
-              "example": "String"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        }
-      }
-    },
     "User": {
       "type": "object",
       "properties": {
@@ -828,96 +1163,10 @@
             "required": {
               "type": "boolean",
               "example": true
-            },
-            "set": {
-              "type": "function"
             }
           }
         },
         "email": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "trim": {
-              "type": "boolean",
-              "example": true
-            },
-            "required": {
-              "type": "array",
-              "example": [
-                true,
-                "Email field must be required"
-              ],
-              "items": {
-                "type": "string"
-              }
-            },
-            "unique": {
-              "type": "array",
-              "example": [
-                true,
-                "There is this email. Email field must be unique"
-              ],
-              "items": {
-                "type": "string"
-              }
-            },
-            "validate": {
-              "type": "array",
-              "example": [
-                null,
-                "Email type is not correct."
-              ],
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "isActive": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "default": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
-        "isStaff": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "default": {
-              "type": "boolean",
-              "example": false
-            }
-          }
-        },
-        "isAdmin": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "default": {
-              "type": "boolean",
-              "example": false
-            }
-          }
-        }
-      }
-    },
-    "Flight": {
-      "type": "object",
-      "properties": {
-        "flightNumber": {
           "type": "object",
           "properties": {
             "type": {
@@ -937,7 +1186,7 @@
             }
           }
         },
-        "airline": {
+        "first_name": {
           "type": "object",
           "properties": {
             "type": {
@@ -953,7 +1202,7 @@
             }
           }
         },
-        "departure": {
+        "last_name": {
           "type": "object",
           "properties": {
             "type": {
@@ -969,129 +1218,48 @@
             }
           }
         },
-        "departureDate": {
+        "is_active": {
           "type": "object",
           "properties": {
             "type": {
               "type": "function"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "get": {
-              "type": "function"
-            }
-          }
-        },
-        "arrival": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "trim": {
-              "type": "boolean",
-              "example": true
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
-        "arrivalDate": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            },
-            "get": {
-              "type": "function"
-            }
-          }
-        },
-        "createdId": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "ref": {
-              "type": "string",
-              "example": "User"
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        }
-      }
-    },
-    "Passenger": {
-      "type": "object",
-      "properties": {
-        "firstName": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "trim": {
-              "type": "boolean",
-              "example": true
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
-        "lastName": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "trim": {
-              "type": "boolean",
-              "example": true
-            },
-            "required": {
-              "type": "boolean",
-              "example": true
-            }
-          }
-        },
-        "gender": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "enum": {
-              "type": "array",
-              "example": [
-                "",
-                "M",
-                "F"
-              ],
-              "items": {
-                "type": "string"
-              }
             },
             "default": {
-              "type": "string",
-              "example": ""
+              "type": "boolean",
+              "example": true
             }
           }
         },
-        "email": {
+        "is_staff": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        },
+        "is_superadmin": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        }
+      }
+    },
+    "Brand": {
+      "type": "object",
+      "properties": {
+        "name": {
           "type": "object",
           "properties": {
             "type": {
@@ -1105,22 +1273,19 @@
               "type": "boolean",
               "example": true
             },
-            "validate": {
-              "type": "function"
+            "unique": {
+              "type": "boolean",
+              "example": true
             }
           }
         },
-        "createdId": {
+        "image": {
           "type": "object",
           "properties": {
             "type": {
               "type": "function"
             },
-            "ref": {
-              "type": "string",
-              "example": "User"
-            },
-            "required": {
+            "trim": {
               "type": "boolean",
               "example": true
             }
@@ -1128,10 +1293,96 @@
         }
       }
     },
-    "Reservation": {
+    "Category": {
       "type": "object",
       "properties": {
-        "flightId": {
+        "name": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "unique": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "Firm": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "unique": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "phone": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "image": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "category_id": {
           "type": "object",
           "properties": {
             "type": {
@@ -1139,7 +1390,7 @@
             },
             "ref": {
               "type": "string",
-              "example": "Flight"
+              "example": "Category"
             },
             "required": {
               "type": "boolean",
@@ -1147,12 +1398,56 @@
             }
           }
         },
-        "passengers": {
-          "type": "array",
-          "example": [],
-          "items": {}
+        "brand_id": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Brand"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
         },
-        "createdId": {
+        "name": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "quantity": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        }
+      }
+    },
+    "Purchase": {
+      "type": "object",
+      "properties": {
+        "user_id": {
           "type": "object",
           "properties": {
             "type": {
@@ -1165,6 +1460,179 @@
             "required": {
               "type": "boolean",
               "example": true
+            }
+          }
+        },
+        "firm_id": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Firm"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "brand_id": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Brand"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "product_id": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Product"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "quantity": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "price": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "price_total": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        }
+      }
+    },
+    "Sale": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "User"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "brand_id": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Brand"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "product_id": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Product"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "quantity": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "price": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "price_total": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
             }
           }
         }
@@ -1173,7 +1641,10 @@
   },
   "security": [
     {
-      "JWT": true
+      "Token": []
+    },
+    {
+      "Bearer": []
     }
   ]
 }

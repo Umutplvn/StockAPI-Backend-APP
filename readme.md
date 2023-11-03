@@ -1,15 +1,12 @@
-# FLIGHT RESERVATION API
+# STOCK MANAGEMENT API
 
 ### ERD:
 
-![ERD](./erdFlightAPI.png)
+![ERD](./erdStockAPI.png)
 
-### Installation:
-```sh
-    $ mkdir logs
-    $ cp .env-sample .env
-    $ npm i
-```
+### ERD-2 (snake_case):
+
+![ERD](./erdStockAPI2.png)
 
 ### Folder/File Structure:
 
@@ -19,35 +16,49 @@
     index.js
     package.json
     readme.md
-    logs/
     src/
-        configs/
+        config/
             dbConnection.js
+            swagger.json
         controllers/
             auth.js
-            flight.js
-            passenger.js
-            reservation.js
+            brand.js
+            category.js
+            firm.js
+            product.js
+            purchase.js
+            sale.js
+            token.js
             user.js
         helpers/
             passwordEncrypt.js
-            setToken.js
-            sync.js
+            sendMail.js
         middlewares/
             authentication.js
             errorHandler.js
             findSearchSortPage.js
             logger.js
             permissions.js
+            upload.js
         models/
-            flight.js
-            passenger.js
-            reservation.js
+            brand.js
+            category.js
+            firm.js
+            product.js
+            purchase.js
+            sale.js
+            token.js
             user.js
         routes/
             auth.js
-            flight.js
-            passenger.js
-            reservation.js
+            brand.js
+            category.js
+            document.js
+            firm.js
+            index.js
+            product.js
+            purchase.js
+            sale.js
+            token.js
             user.js
 ```
