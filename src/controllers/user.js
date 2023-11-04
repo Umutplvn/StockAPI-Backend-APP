@@ -55,10 +55,7 @@ module.exports = {
         req.body.is_staff=false,
         req.body.is_superadmin=false
         const data = await User.create(req.body)
-        res.status(201).send({
-            error:false,
-            data
-        })
+        res.status(201).send(data)
         
     },
 
