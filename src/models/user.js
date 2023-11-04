@@ -111,3 +111,6 @@ UserSchema.pre('init', function(data){  // 'init' => to send some additional dat
     data.id = data._id,     
     data.createds=data.createdAt.toLocaleDateString('ie-ie')
 })
+
+/* ------------------------------------------------------- */
+module.exports = mongoose.model('User', UserSchema)
