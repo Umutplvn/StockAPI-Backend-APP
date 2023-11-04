@@ -21,7 +21,7 @@ module.exports = {
             `
         */
     
-        const data = await res.getModelList(Sale)
+        const data = await res.getModelList(Sale, {}, ['brand_id', 'product_id'] )
 
         // res.status(200).send({
         //     error:false,
@@ -54,6 +54,10 @@ module.exports = {
         // Disallow setting admin/staff:
         req.body.is_staff=false,
         req.body.is_superadmin=false
+
+        //Auto add user_id to req.body
+        req.body.user_id = req.user?.id
+
         const data = await Sale.create(req.body)
         res.status(201).send(data)
         
@@ -65,7 +69,7 @@ module.exports = {
             #swagger.summary = "Get Single Sale"
         */
 
-        const data = await Sale.findOne( {_id:req.params.id})
+        const data = await Sale.findOne( {_id:req.params.id}).populate(['brand_id', 'product_id'])
 
         res.status(200).send({
             error:false,
