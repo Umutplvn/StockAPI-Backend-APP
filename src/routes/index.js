@@ -17,15 +17,15 @@ router.use('/tokens', require('./token'))
 
 
 // // brand:
-// router.use('/brands', require('./brand'))
+router.use('/brands', require('./brand'))
 // // category:
-// router.use('/categories', require('./category'))
+router.use('/categories', require('./category'))
 // // firm:
-// router.use('/firms', require('./firm'))
+router.use('/firms', require('./firm'))
 // // product:
-// router.use('/products', require('./product'))
+router.use('/products', require('./product'))
 // // purchase:
-// router.use('/purchases', require('./purchase'))
+router.use('/purchases', require('./purchase'))
 // // sale:
 // router.use('/sales', require('./sale'))
 

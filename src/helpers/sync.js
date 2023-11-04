@@ -51,64 +51,64 @@ module.exports = async function () {
         "is_superadmin": false
     })
 
-//     /* Brand */
-//     const Brand = require('../models/brand')
-//     await Brand.deleteMany() // !!! Clear collection.
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f104",
-//         "name": "Adidas",
-//         "image": "https://1000logos.net/wp-content/uploads/2019/06/Adidas-Logo-1991.jpg"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f105",
-//         "name": "Nike",
-//         "image": "https://i.pinimg.com/736x/33/e6/3d/33e63d5adb0da6b303a83901c8e8463a.jpg"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f107",
-//         "name": "Puma",
-//         "image": "https://staticg.sportskeeda.com/editor/2023/03/bda84-16779522739911-1920.jpg"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f108",
-//         "name": "Lotto",
-//         "image": "https://1000logos.net/wp-content/uploads/2021/05/Lotto-logo.png"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f109",
-//         "name": "Kinetix",
-//         "image": "https://seeklogo.com/images/K/kinetix-logo-73FB3FD17D-seeklogo.com.png"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f110",
-//         "name": "Reebok",
-//         "image": "https://preview.thenewsmarket.com/Previews/RBOK/StillAssets/1920x1080/551064.png"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f122",
-//         "name": "Samsung",
-//         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Samsung_Logo.svg/2560px-Samsung_Logo.svg.png"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f123",
-//         "name": "Ülker",
-//         "image": "https://cdn.worldvectorlogo.com/logos/ulker.svg"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f129",
-//         "name": "Tommy",
-//         "image": "https://i.pinimg.com/736x/d3/09/1a/d3091a1a5350fede679b2c7461b0745b.jpg"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f130",
-//         "name": "LG",
-//         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/LG_symbol.svg/640px-LG_symbol.svg.png"
-//     })
-//     await Brand.create({
-//         "_id": "65343222b67e9681f937f131",
-//         "name": "Apple",
-//         "image": "https://www.tailorbrands.com/wp-content/uploads/2021/01/apple_logo_1988.jpg"
-//     })
+    /* Brand */
+    const Brand = require('../models/brand')
+    await Brand.deleteMany() // !!! Clear collection.
+    await Brand.create({
+        "_id": "65343222b67e9681f937f104",
+        "name": "Adidas",
+        "image": "https://1000logos.net/wp-content/uploads/2019/06/Adidas-Logo-1991.jpg"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f105",
+        "name": "Nike",
+        "image": "https://i.pinimg.com/736x/33/e6/3d/33e63d5adb0da6b303a83901c8e8463a.jpg"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f107",
+        "name": "Puma",
+        "image": "https://staticg.sportskeeda.com/editor/2023/03/bda84-16779522739911-1920.jpg"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f108",
+        "name": "Lotto",
+        "image": "https://1000logos.net/wp-content/uploads/2021/05/Lotto-logo.png"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f109",
+        "name": "Kinetix",
+        "image": "https://seeklogo.com/images/K/kinetix-logo-73FB3FD17D-seeklogo.com.png"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f110",
+        "name": "Reebok",
+        "image": "https://preview.thenewsmarket.com/Previews/RBOK/StillAssets/1920x1080/551064.png"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f122",
+        "name": "Samsung",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Samsung_Logo.svg/2560px-Samsung_Logo.svg.png"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f123",
+        "name": "Ülker",
+        "image": "https://cdn.worldvectorlogo.com/logos/ulker.svg"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f129",
+        "name": "Tommy",
+        "image": "https://i.pinimg.com/736x/d3/09/1a/d3091a1a5350fede679b2c7461b0745b.jpg"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f130",
+        "name": "LG",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/LG_symbol.svg/640px-LG_symbol.svg.png"
+    })
+    await Brand.create({
+        "_id": "65343222b67e9681f937f131",
+        "name": "Apple",
+        "image": "https://www.tailorbrands.com/wp-content/uploads/2021/01/apple_logo_1988.jpg"
+    })
 
 //     /* Category */
 //     const Category = require('../models/category')
