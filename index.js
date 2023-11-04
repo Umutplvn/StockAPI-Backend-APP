@@ -33,7 +33,7 @@ app.use(express.json())
 app.use('/upload', express.static('./upload'))
 
 // Check Authentication:
-app.use(require('./src/middlewares/authentication'))
+app.use(require('./src/middlewares/authentication'))    // checks if smo has logged in or not - not related with permissions
 
 // Run Logger:
 app.use(require('./src/middlewares/logger'))
@@ -54,7 +54,7 @@ app.all('/', (req, res) => {
             redoc: '/documents/redoc',
             json: '/documents/json',
         },
-        user: req.user
+        user: req.user  //authentication.js
     })
 })
 

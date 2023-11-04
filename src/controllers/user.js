@@ -20,8 +20,10 @@ module.exports = {
                 </ul>
             `
         */
-    
-        const data = await res.getModelList(User)
+        
+ const filters = (req.user?.is_superadmin) ? {} : { _id: req.user._id } // To let staff to see only its own recordings and data unless its superadmin
+
+        const data = await res.getModelList(User, filter)
 
         // res.status(200).send({
         //     error:false,
@@ -64,7 +66,7 @@ module.exports = {
             #swagger.tags = ["Users"]
             #swagger.summary = "Get Single User"
         */
-
+        const filters = (req.user?.is_superadmin) ? {_id:req.params.id} : { _id: req.user._id } // If you are not superadmin you can only see your own recordings if you try to see another one's data
         const data = await User.findOne( {_id:req.params.id})
 
         res.status(200).send({
@@ -90,8 +92,11 @@ module.exports = {
                 }
             }
         */
+        const filters = (req.user?.is_superadmin) ? {_id:req.params.id} : { _id: req.user._id } 
+            
+        req.body.is_superadmin = (req.user?.is_superadmin) ? req.body.is_superadmin : false
 
-        const data = await User.updateOne({_id:req.param.id}, req.body, { runValidators: true })  // If there is a validate function in our model and we want to use it while updating, we have to add it.
+        const data = await User.updateOne(filters, req.body, { runValidators: true })  // If there is a validate function in our model and we want to use it while updating, we have to add it.
 
         res.status(202).send({
             error:false,
