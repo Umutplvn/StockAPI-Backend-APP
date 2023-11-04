@@ -2,13 +2,14 @@
 /* -------------------------------------------------------
     NODEJS EXPRESS | CLARUSWAY FullStack Team
 ------------------------------------------------------- */
+// Purchase Controller:
 
 const Purchase = require('../models/purchase')
 
 module.exports = {
 
-    list: async(req, res)=>{
-         /*
+    list: async (req, res) => {
+        /*
             #swagger.tags = ["Purchases"]
             #swagger.summary = "List Purchases"
             #swagger.description = `
@@ -20,99 +21,86 @@ module.exports = {
                 </ul>
             `
         */
-    
-        const data = await res.getModelList(Purchase)
+
+        const data = await res.getModelList(Purchase, {}, ['firm_id', 'brand_id', 'product_id'])
 
         // res.status(200).send({
-        //     error:false,
-        //     details: await res.getModelList(Purchase),
+        //     error: false,
+        //     details: await res.getModelListDetails(Purchase),
         //     data
         // })
-
-        //As it was asked us to send the data directly unlike mentioned above
-        res.status(200).send(data)
-
-    },
-
-    create: async(req, res)=>{
-        /*
-        #swagger.tags = ["Purchases"]
-        #swagger.summary = "Create Purchase"
-        #swagger.parameters['body'] = {
-        in: 'body',
-        required: true,
-        schema: {
-        "Purchasename": "test",
-       "password": "1234",
-        "email": "test@site.com",
-        "first_name": "test",
-        "last_name": "test",
-        }
-        }
-        */
-
-        // Disallow setting admin/staff:
-        req.body.is_staff=false,
-        req.body.is_superadmin=false
-        const data = await Purchase.create(req.body)
-        res.status(201).send(data)
         
+        // FOR REACT PROJECT:
+        res.status(200).send(data)
     },
 
-    read: async(req, res)=>{
-         /*
+    create: async (req, res) => {
+        /*
             #swagger.tags = ["Purchases"]
-            #swagger.summary = "Get Single Purchase"
+            #swagger.summary = "Create Purchase"
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/Purchase' }
+            }
         */
 
-        const data = await Purchase.findOne( {_id:req.params.id})
+        // Auto add user_id to req.body:
+        req.body.user_id = req.user?._id
 
-        res.status(200).send({
-            error:false,
+        const data = await Purchase.create(req.body)
+
+        res.status(201).send({
+            error: false,
             data
         })
     },
 
-    update: async(req, res)=>{
+    read: async (req, res) => {
+        /*
+            #swagger.tags = ["Purchases"]
+            #swagger.summary = "Get Single Purchase"
+        */
 
+        const data = await Purchase.findOne({ _id: req.params.id }).populate(['firm_id', 'brand_id', 'product_id'])
+
+        res.status(200).send({
+            error: false,
+            data
+        })
+    },
+
+    update: async (req, res) => {
         /*
             #swagger.tags = ["Purchases"]
             #swagger.summary = "Update Purchase"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Purchasename": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Purchase' }
             }
         */
 
-        const data = await Purchase.updateOne({_id:req.param.id}, req.body, { runValidators: true })  // If there is a validate function in our model and we want to use it while updating, we have to add it.
+        const data = await Purchase.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
-            error:false,
+            error: false,
             data,
-            new: await Purchase.findOne({_id:req.params.id})
+            new: await Purchase.findOne({ _id: req.params.id })
         })
     },
 
-    delete: async(req, res)=>{
-
+    delete: async (req, res) => {
         /*
             #swagger.tags = ["Purchases"]
             #swagger.summary = "Delete Purchase"
         */
 
-        const data = await Purchase.deleteOne({_id:req.params.id})
+        const data = await Purchase.deleteOne({ _id: req.params.id })
 
         res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,
             data
         })
-        
     },
 }

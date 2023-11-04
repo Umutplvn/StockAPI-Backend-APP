@@ -12,64 +12,58 @@ const { mongoose } = require('../configs/dbConnection')
     "price": 20
 }
 /* ------------------------------------------------------- */
-// Puerchase Model:
+// Purchase Model:
 
-const Purchasechema = new mongoose.Schema({
+const PurchaseSchema = new mongoose.Schema({
 
-   user_id:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:'User',
-    required:true
-   },
-
-   firm_id:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:'Firm',
-    required:true
-   },
-
-   brand_id:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:'Brand',
-    required:true
-   },
-
-   product_id:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:'Product',
-    required:true
-   },
-
-   name:{
-    type:String,
-    trim:true,
-    required:true,
-   },
-
-   quantity:{
-    type:Number,
-    default: 0
-   },
-
-    price:{
-      type:Number,
-      default: 0
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
 
-    price_total:{
+    firm_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Firm',
+        required: true
+    },
+
+    brand_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Brand',
+        required: true
+    },
+
+    product_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+    },
+
+    quantity: {
         type: Number,
-        default: function(){ return this.quantity * this.price }, // for CREATE
-        transform: function(){ return this.quantity * this.price } // for UPDATE
-        // set: function(){ return this.quantity * this.price } // to not allow to get a price_total from req.body
+        default: 0
+    },
+
+    price: {
+        type: Number,
+        default: 0
+    },
+
+    price_total: {
+        type: Number,
+        default: function () { return this.price * this.quantity }, // for CREATE
+        transform: function () { return this.price * this.quantity }, // for UPDATE
+        // set: function () { return this.price * this.quantity } // for sendingData
     }
 
-}, { collection: 'purchase', timestamps: true})
+}, { collection: 'purchases', timestamps: true })
 
 /* ------------------------------------------------------- */
 // FOR REACT PROJECT:
-Purchasechema.pre('init', function (data) {
+PurchaseSchema.pre('init', function (data) {
     data.id = data._id
-    data.createds = data.createdAt.toLocaleDateString('ie-ie')
+    data.createds = data.createdAt.toLocaleDateString('tr-tr')
 })
 /* ------------------------------------------------------- */
-module.exports = mongoose.model('Purchase', Purchasechema)
+module.exports = mongoose.model('Purchase', PurchaseSchema)
