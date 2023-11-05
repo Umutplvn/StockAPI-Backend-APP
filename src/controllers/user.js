@@ -23,7 +23,7 @@ module.exports = {
         
  const filters = (req.user?.is_superadmin) ? {} : { _id: req.user._id } // To let staff to see only its own recordings and data unless its superadmin
 
-        const data = await res.getModelList(User, filter)
+        const data = await res.getModelList(User, filters)
 
         // res.status(200).send({
         //     error:false,
