@@ -36,29 +36,23 @@ module.exports = {
 
     create: async(req, res)=>{
         /*
-        #swagger.tags = ["Products"]
-        #swagger.summary = "Create Product"
-        #swagger.parameters['body'] = {
-        in: 'body',
-        required: true,
-        schema: {
-        "Productname": "test",
-       "password": "1234",
-        "email": "test@site.com",
-        "first_name": "test",
-        "last_name": "test",
-        }
-        }
+            #swagger.tags = ["Products"]
+            #swagger.summary = "Create Product"
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/Product' }
+            }
         */
 
-        // Disallow setting admin/staff:
-        req.body.is_staff=false,
-        req.body.is_superadmin=false
         const data = await Product.create(req.body)
-        res.status(201).send(data)
-        
-    },
 
+            res.status(201).send({
+                error: false,
+                data
+            })
+        },
+        
     read: async(req, res)=>{
          /*
             #swagger.tags = ["Products"]

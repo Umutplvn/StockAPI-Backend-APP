@@ -35,29 +35,23 @@ module.exports = {
     },
 
     create: async(req, res)=>{
-        /*
-        #swagger.tags = ["Categories"]
-        #swagger.summary = "Create Category"
-        #swagger.parameters['body'] = {
-        in: 'body',
-        required: true,
-        schema: {
-        "Categoryname": "test",
-       "password": "1234",
-        "email": "test@site.com",
-        "first_name": "test",
-        "last_name": "test",
-        }
-        }
+       /*
+            #swagger.tags = ["Categories"]
+            #swagger.summary = "Create Category"
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/Category' }
+            }
         */
 
-        // Disallow setting admin/staff:
-        req.body.is_staff=false,
-        req.body.is_superadmin=false
         const data = await Category.create(req.body)
-        res.status(201).send(data)
-        
-    },
+
+            res.status(201).send({
+                error: false,
+                data
+            })
+        },
 
     read: async(req, res)=>{
          /*
@@ -81,15 +75,10 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Categoryname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Category' }
             }
         */
+
 
         const data = await Category.updateOne({_id:req.param.id}, req.body, { runValidators: true })  // If there is a validate function in our model and we want to use it while updating, we have to add it.
 

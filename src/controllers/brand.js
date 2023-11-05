@@ -35,29 +35,24 @@ module.exports = {
     },
 
     create: async(req, res)=>{
-        /*
-        #swagger.tags = ["Brands"]
-        #swagger.summary = "Create Brand"
-        #swagger.parameters['body'] = {
-        in: 'body',
-        required: true,
-        schema: {
-        "Brandname": "test",
-       "password": "1234",
-        "email": "test@site.com",
-        "first_name": "test",
-        "last_name": "test",
-        }
-        }
+       /*
+            #swagger.tags = ["Brands"]
+            #swagger.summary = "Create Brand"
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/Brand' }
+            }
         */
 
-        // Disallow setting admin/staff:
-        req.body.is_staff=false,
-        req.body.is_superadmin=false
+       
         const data = await Brand.create(req.body)
-        res.status(201).send(data)
-        
-    },
+
+            res.status(201).send({
+                error: false,
+                data
+            })
+        },
 
     read: async(req, res)=>{
          /*
@@ -75,19 +70,13 @@ module.exports = {
 
     update: async(req, res)=>{
 
-        /*
+       /*
             #swagger.tags = ["Brands"]
             #swagger.summary = "Update Brand"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Brandname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Brand' }
             }
         */
 

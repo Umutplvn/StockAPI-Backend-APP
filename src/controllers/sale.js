@@ -35,31 +35,24 @@ module.exports = {
     },
 
     create: async(req, res)=>{
-        /*
-        #swagger.tags = ["Sales"]
-        #swagger.summary = "Create Sale"
-        #swagger.parameters['body'] = {
-        in: 'body',
-        required: true,
-        schema: {
-        "Salename": "test",
-       "password": "1234",
-        "email": "test@site.com",
-        "first_name": "test",
-        "last_name": "test",
-        }
-        }
+       /*
+            #swagger.tags = ["Sales"]
+            #swagger.summary = "Create Sale"
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/Sale' }
+            }
         */
-
-        // Disallow setting admin/staff:
-        req.body.is_staff=false,
-        req.body.is_superadmin=false
-
+      
         //Auto add user_id to req.body
         req.body.user_id = req.user?.id
 
         const data = await Sale.create(req.body)
-        res.status(201).send(data)
+        res.status(201).send({
+            error:false,
+            data
+        })
         
     },
 
@@ -85,13 +78,7 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Salename": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Sale' }
             }
         */
 

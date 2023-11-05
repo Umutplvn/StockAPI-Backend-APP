@@ -35,27 +35,15 @@ module.exports = {
     },
 
     create: async(req, res)=>{
-        /*
-        #swagger.tags = ["Tokens"]
-        #swagger.summary = "Create Token"
-        #swagger.parameters['body'] = {
-        in: 'body',
-        required: true,
-        schema: {
-        "Tokenname": "test",
-       "password": "1234",
-        "email": "test@site.com",
-        "first_name": "test",
-        "last_name": "test",
-        }
-        }
+         /*
+            #swagger.ignore = true
         */
 
-        // Disallow setting admin/staff:
-        req.body.is_staff=false,
-        req.body.is_superadmin=false
         const data = await Token.create(req.body)
-        res.status(201).send(data)
+        res.status(201).send({
+            error:false,
+            data
+        })
         
     },
 
@@ -75,20 +63,8 @@ module.exports = {
 
     update: async(req, res)=>{
 
-        /*
-            #swagger.tags = ["Tokens"]
-            #swagger.summary = "Update Token"
-            #swagger.parameters['body'] = {
-                in: 'body',
-                required: true,
-                schema: {
-                    "Tokenname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
-            }
+         /*
+            #swagger.ignore = true
         */
 
         const data = await Token.updateOne({_id:req.param.id}, req.body, { runValidators: true })  // If there is a validate function in our model and we want to use it while updating, we have to add it.

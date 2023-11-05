@@ -111,8 +111,9 @@ module.exports = {
             #swagger.tags = ["Users"]
             #swagger.summary = "Delete User"
         */
-
-        const data = await User.deleteOne({_id:req.params.id})
+        const filters = (req.user?.is_superadmin) ? {_id:req.params.id} : { _id: req.user._id }     
+        
+        const data = await User.deleteOne(filters)
 
         res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,

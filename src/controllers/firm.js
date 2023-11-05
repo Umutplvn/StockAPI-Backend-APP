@@ -36,28 +36,22 @@ module.exports = {
 
     create: async(req, res)=>{
         /*
-        #swagger.tags = ["Firms"]
-        #swagger.summary = "Create Firm"
-        #swagger.parameters['body'] = {
-        in: 'body',
-        required: true,
-        schema: {
-        "Firmname": "test",
-       "password": "1234",
-        "email": "test@site.com",
-        "first_name": "test",
-        "last_name": "test",
-        }
-        }
+            #swagger.tags = ["Firms"]
+            #swagger.summary = "Create Firm"
+            #swagger.parameters['body'] = {
+                in: 'body',
+                required: true,
+                schema: { $ref: '#/definitions/Firm' }
+            }
         */
-
-        // Disallow setting admin/staff:
-        req.body.is_staff=false,
-        req.body.is_superadmin=false
-        const data = await Firm.create(req.body)
-        res.status(201).send(data)
         
-    },
+        const data = await Firm.create(req.body)
+
+            res.status(201).send({
+                error: false,
+                data
+            })
+        },
 
     read: async(req, res)=>{
          /*
@@ -81,13 +75,7 @@ module.exports = {
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Firmname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Firm' }
             }
         */
 
