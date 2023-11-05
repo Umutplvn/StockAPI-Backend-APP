@@ -112,8 +112,9 @@ module.exports = {
         const currentPurchase = await Purchase.findOne({_id:req.params.id})
 
         //Delete:
-
         const data = await Purchase.deleteOne({ _id: req.params.id })
+
+        //Set stock after Pruchase process
         const updateProduct=await Product.updateOne({_id:currentPurchase.product_id}, {$inc: {stock:-currentPurchase.quantity}}) // increase : "stock" field
 
         res.status(data.deletedCount ? 204 : 404).send({
