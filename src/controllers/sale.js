@@ -4,6 +4,7 @@
 ------------------------------------------------------- */
 
 const Sale = require('../models/sale')
+const Product = require('../models/product')
 
 module.exports = {
 
@@ -48,11 +49,25 @@ module.exports = {
         //Auto add user_id to req.body
         req.body.user_id = req.user?.id
 
-        const data = await Sale.create(req.body)
-        res.status(201).send({
+        //Get Stock info to check if we have enough stock
+        const currentProduct=await Product.findOne({_id:req.body.product_id})
+        
+        if(currentProduct.stock >=req.body.quantity){
+
+            const data = await Sale.create(req.body)
+            
+            //Set stock after Sale process
+            const updateProduct = await Product.updateOne({ _id: data.product_id }, { $inc: { stock: -data.quantity } })
+
+            res.status(201).send({
             error:false,
-            data
+            data,
+            
         })
+
+        }else{
+            throw new Error('There is no enough stock for this sale', {cause: {currentProduct}})
+        }      
         
     },
 
@@ -91,19 +106,22 @@ module.exports = {
         })
     },
 
-    delete: async(req, res)=>{
-
+    delete: async (req, res) => {
         /*
             #swagger.tags = ["Sales"]
             #swagger.summary = "Delete Sale"
         */
+        // Get current stock quantity 
+        const currentSale = await Sale.findOne({_id:req.params.id})
 
-        const data = await Sale.deleteOne({_id:req.params.id})
+        //Delete:
+
+        const data = await Sale.deleteOne({ _id: req.params.id })
+        const updateProduct=await Product.updateOne({_id:currentSale.product_id}, {$inc: {stock: +currentSale.quantity}}) // increase : "stock" field
 
         res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,
             data
         })
-        
     },
 }

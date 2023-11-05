@@ -91,7 +91,7 @@ module.exports = {
                 // Difference:
                 const quantity = req.body.quantity - currentPurchase.quantity
                 // Set stock (quantity) when Purchase process:
-                const updateProduct = await Product.updateOne({ _id: currentPurchase.product_id }, { $inc: { stock: +quantity } })
+                const updateProduct = await Product.updateOne({ _id: currentPurchase.product_id }, { $inc: { stock: quantity } })
             }
 
         const data = await Purchase.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
