@@ -4,6 +4,8 @@
 ------------------------------------------------------- */
 
 const User = require('../models/user')
+const Token = require('../models/token')
+const passwordEncrypt = require('../helpers/passwordEncrypt')
 
 module.exports = {
 
@@ -53,12 +55,29 @@ module.exports = {
         }
         */
 
-        // Disallow setting admin/staff:
-        req.body.is_staff=false,
-        req.body.is_superadmin=false
-        const data = await User.create(req.body)
-        res.status(201).send(data)
-        
+       // Disallow setting admin/staff:
+       req.body.is_staff = false
+       req.body.is_superadmin = false
+
+       const data = await User.create(req.body)
+
+       // Create token for auto-login: Kullanici olusturulunca login sayfasina yonlendirmesin ve login oldugunu anlasin diye
+       const tokenData = await Token.create({
+           user_id: data._id,
+           token: passwordEncrypt(data._id + Date.now())
+       })
+          // res.status(201).send({
+        //     error: false,
+        //     token: tokenData.token,
+        //     data
+        // })
+
+        // FOR REACT PROJECT:
+        res.status(201).send({
+            error: false,
+            token: tokenData.token,
+            ...data._doc    // To reach any data in "data" 
+        })
     },
 
     read: async(req, res)=>{

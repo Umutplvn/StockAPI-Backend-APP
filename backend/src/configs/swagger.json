@@ -40,7 +40,17 @@
     "application/json"
   ],
   "paths": {
-    "/auth/login": {
+    "/account/register": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/account/auth/login": {
       "post": {
         "tags": [
           "Authentication"
@@ -74,7 +84,7 @@
         }
       }
     },
-    "/auth/refresh": {
+    "/account/auth/refresh": {
       "post": {
         "tags": [
           "Authentication"
@@ -109,7 +119,7 @@
         }
       }
     },
-    "/auth/logout": {
+    "/account/auth/logout": {
       "get": {
         "tags": [
           "Authentication"
@@ -145,17 +155,10 @@
         }
       },
       "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get Single User",
         "description": "",
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "201": {
-            "description": "Created"
+          "default": {
+            "description": ""
           }
         }
       }
@@ -310,7 +313,7 @@
         }
       }
     },
-    "/brands/": {
+    "/stock/brands/": {
       "get": {
         "description": "",
         "responses": {
@@ -328,7 +331,7 @@
         }
       }
     },
-    "/brands/{id}": {
+    "/stock/brands/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -394,7 +397,7 @@
         }
       }
     },
-    "/categories/": {
+    "/stock/categories/": {
       "get": {
         "description": "",
         "responses": {
@@ -412,7 +415,7 @@
         }
       }
     },
-    "/categories/{id}": {
+    "/stock/categories/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -478,7 +481,7 @@
         }
       }
     },
-    "/firms/": {
+    "/stock/firms/": {
       "get": {
         "description": "",
         "responses": {
@@ -496,7 +499,7 @@
         }
       }
     },
-    "/firms/{id}": {
+    "/stock/firms/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -562,7 +565,7 @@
         }
       }
     },
-    "/products/": {
+    "/stock/products/": {
       "get": {
         "description": "",
         "responses": {
@@ -580,7 +583,7 @@
         }
       }
     },
-    "/products/{id}": {
+    "/stock/products/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -646,7 +649,7 @@
         }
       }
     },
-    "/purchases/": {
+    "/stock/purchases/": {
       "get": {
         "tags": [
           "Purchases"
@@ -682,7 +685,7 @@
         }
       }
     },
-    "/purchases/{id}": {
+    "/stock/purchases/{id}": {
       "get": {
         "tags": [
           "Purchases"
@@ -783,7 +786,7 @@
         }
       }
     },
-    "/sales/": {
+    "/stock/sales/": {
       "get": {
         "description": "",
         "responses": {
@@ -801,7 +804,7 @@
         }
       }
     },
-    "/sales/{id}": {
+    "/stock/sales/{id}": {
       "get": {
         "description": "",
         "parameters": [

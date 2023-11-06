@@ -4,10 +4,10 @@
 ------------------------------------------------------- */
 // Auth Controller:
 
+const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const Token = require('../models/token')
 const passwordEncrypt = require('../helpers/passwordEncrypt')
-const jwt = require('jsonwebtoken') // npm i jsonwebtoken
 
 module.exports = {
 
@@ -15,7 +15,7 @@ module.exports = {
         /*
             #swagger.tags = ["Authentication"]
             #swagger.summary = "Login"
-            #swagger.description = 'Login with username (or email) and password to get simpleToken and JWT'
+            #swagger.description = 'Login with username (or email) and password for get simpleToken and JWT'
             #swagger.parameters["body"] = {
                 in: "body",
                 required: true,
@@ -38,31 +38,29 @@ module.exports = {
 
                     // Use UUID:
                     // const { randomUUID } = require('node:crypto')
+                    // let tokenData = await Token.findOne({ user_id: user._id })
                     // if (!tokenData) tokenData = await Token.create({
                     //     user_id: user._id,
                     //     token: randomUUID()
                     // })
 
-                    //TOKEN:
-                    let tokenData = await Token.findOne({ user_id: user._id }) // id came with user
+                    // TOKEN:
+                    let tokenData = await Token.findOne({ user_id: user._id })
                     if (!tokenData) tokenData = await Token.create({
                         user_id: user._id,
                         token: passwordEncrypt(user._id + Date.now())
                     })
 
-                    //JWT:
-                    const accessToken = jwt.sign( user.toJSON(), process.env.ACCESS_KEY, {expiresIn: '30min'} ) // jwt.sign()= to create a jwt token 
-                    const refreshToken = jwt.sign( {_id: user._id, password:user.password}, process.env.REFRESH_KEY, {expiresIn: '3d'} ) // jwt.sign()= to create a jwt token 
-
-
+                    // JWT:
+                    const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, { expiresIn: '30m' })
+                    const refreshToken = jwt.sign({ _id: user._id, password: user.password }, process.env.REFRESH_KEY, { expiresIn: '3d' })
 
                     res.send({
-                        // JWT Token or Simple Token can be used
                         error: false,
+                        // FOR REACT PROJECT:
+                        key: tokenData.token,
                         // token: tokenData.token,
-                        // FOR REACT PROJECT: 
-                        key: tokenData.token,   // For Simple TOKEN  
-                        bearer: {accessToken, refreshToken},    //For JWT TOKEN
+                        bearer: { accessToken, refreshToken },
                         user,
                     })
 
@@ -83,7 +81,6 @@ module.exports = {
         }
     },
 
-    //For JWT 
     refresh: async (req, res) => {
         /*
             #swagger.tags = ['Authentication']
@@ -123,7 +120,6 @@ module.exports = {
                             if (user.is_active) {
 
                                 // JWT:
-                                // const accessToken = jwt.sign(user.toJSON(), user.password, { expiresIn: '30m' })
                                 const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_KEY, { expiresIn: '30m' })
 
                                 res.send({
@@ -176,7 +172,7 @@ module.exports = {
 
             } else { // JWT
 
-                message = 'No need any process to logout. You must delete JWT tokens.'
+                message = 'No need any process for logout. You must delete JWT tokens.'
             }
         }
 
