@@ -29,6 +29,18 @@ dbConnection()
 // Accept JSON:
 app.use(express.json())
 
+// CORS- npm i cors  - Corss Origin Resource Sharing - To let Frontend Server to Connect Backend Server
+app.use(require('cors')({
+    "origin": ["http://localhost:5173/", "http://localhost:4173/", "http://localhost:3000/"]
+}))
+
+// app.use(cors({                                       =>Default Values
+//         "origin": "*",
+//         "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+//         "preflightContinue": false,
+//         "optionsSuccessStatus": 204
+// }))
+
 // Call static uploadFile:
 app.use('/upload', express.static('./upload'))
 

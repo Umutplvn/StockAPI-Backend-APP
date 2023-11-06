@@ -51,7 +51,6 @@ module.exports = {
                     })
 
                     //JWT:
-                    // const accessToken = jwt.sign( user.toJSON(), user.password, {expiresIn: '30min'} ) // jwt.sign()= to create a jwt token 
                     const accessToken = jwt.sign( user.toJSON(), process.env.ACCESS_KEY, {expiresIn: '30min'} ) // jwt.sign()= to create a jwt token 
                     const refreshToken = jwt.sign( {_id: user._id, password:user.password}, process.env.REFRESH_KEY, {expiresIn: '3d'} ) // jwt.sign()= to create a jwt token 
 
