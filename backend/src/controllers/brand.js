@@ -2,13 +2,14 @@
 /* -------------------------------------------------------
     NODEJS EXPRESS | CLARUSWAY FullStack Team
 ------------------------------------------------------- */
+// Brand Controller:
 
 const Brand = require('../models/brand')
 
 module.exports = {
 
-    list: async(req, res)=>{
-         /*
+    list: async (req, res) => {
+        /*
             #swagger.tags = ["Brands"]
             #swagger.summary = "List Brands"
             #swagger.description = `
@@ -20,22 +21,21 @@ module.exports = {
                 </ul>
             `
         */
-    
+
         const data = await res.getModelList(Brand)
 
         // res.status(200).send({
-        //     error:false,
-        //     details: await res.getModelList(Brand),
+        //     error: false,
+        //     details: await res.getModelListDetails(Brand),
         //     data
         // })
-
-        //As it was asked us to send the data directly unlike mentioned above
+        
+        // FOR REACT PROJECT:
         res.status(200).send(data)
-
     },
 
-    create: async(req, res)=>{
-       /*
+    create: async (req, res) => {
+        /*
             #swagger.tags = ["Brands"]
             #swagger.summary = "Create Brand"
             #swagger.parameters['body'] = {
@@ -45,32 +45,30 @@ module.exports = {
             }
         */
 
-       
         const data = await Brand.create(req.body)
 
-            res.status(201).send({
-                error: false,
-                data
-            })
-        },
-
-    read: async(req, res)=>{
-         /*
-            #swagger.tags = ["Brands"]
-            #swagger.summary = "Get Single Brand"
-        */
-
-        const data = await Brand.findOne( {_id:req.params.id})
-
-        res.status(200).send({
-            error:false,
+        res.status(201).send({
+            error: false,
             data
         })
     },
 
-    update: async(req, res)=>{
+    read: async (req, res) => {
+        /*
+            #swagger.tags = ["Brands"]
+            #swagger.summary = "Get Single Brand"
+        */
 
-       /*
+        const data = await Brand.findOne({ _id: req.params.id })
+
+        res.status(200).send({
+            error: false,
+            data
+        })
+    },
+
+    update: async (req, res) => {
+        /*
             #swagger.tags = ["Brands"]
             #swagger.summary = "Update Brand"
             #swagger.parameters['body'] = {
@@ -80,28 +78,26 @@ module.exports = {
             }
         */
 
-        const data = await Brand.updateOne({_id:req.param.id}, req.body, { runValidators: true })  // If there is a validate function in our model and we want to use it while updating, we have to add it.
+        const data = await Brand.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
-            error:false,
+            error: false,
             data,
-            new: await Brand.findOne({_id:req.params.id})
+            new: await Brand.findOne({ _id: req.params.id })
         })
     },
 
-    delete: async(req, res)=>{
-
+    delete: async (req, res) => {
         /*
             #swagger.tags = ["Brands"]
             #swagger.summary = "Delete Brand"
         */
 
-        const data = await Brand.deleteOne({_id:req.params.id})
+        const data = await Brand.deleteOne({ _id: req.params.id })
 
         res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,
             data
         })
-        
     },
 }

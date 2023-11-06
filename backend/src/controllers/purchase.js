@@ -4,8 +4,8 @@
 ------------------------------------------------------- */
 // Purchase Controller:
 
-const Purchase = require('../models/purchase')
 const Product = require('../models/product')
+const Purchase = require('../models/purchase')
 
 module.exports = {
 
@@ -36,7 +36,7 @@ module.exports = {
     },
 
     create: async (req, res) => {
-       /*
+        /*
             #swagger.tags = ["Purchases"]
             #swagger.summary = "Create Purchase"
             #swagger.parameters['body'] = {
@@ -49,10 +49,11 @@ module.exports = {
         // Auto add user_id to req.body:
         req.body.user_id = req.user?._id
 
+        // Create:
         const data = await Purchase.create(req.body)
 
-        // set stock(quantity) when purchase is completed
-        const updateProduct=await Product.updateOne({_id:data.product_id}, {$inc: {stock:+data.quantity}}) // increase : "stock" field
+        // set stock (quantity) when Purchase process:
+        const updateProduct = await Product.updateOne({ _id: data.product_id }, { $inc: { stock: +data.quantity } })
 
         res.status(201).send({
             error: false,
@@ -66,6 +67,7 @@ module.exports = {
             #swagger.summary = "Get Single Purchase"
         */
 
+        // Read:
         const data = await Purchase.findOne({ _id: req.params.id }).populate(['firm_id', 'brand_id', 'product_id'])
 
         res.status(200).send({
@@ -85,15 +87,16 @@ module.exports = {
             }
         */
 
-            if (req.body?.quantity) {
-                // Get current stock quantity from the Purchase:
-                const currentPurchase = await Purchase.findOne({ _id: req.params.id })
-                // Difference:
-                const quantity = req.body.quantity - currentPurchase.quantity
-                // Set stock (quantity) when Purchase process:
-                const updateProduct = await Product.updateOne({ _id: currentPurchase.product_id }, { $inc: { stock: quantity } })
-            }
+        if (req.body?.quantity) {
+            // get current stock quantity from the Purchase:
+            const currentPurchase = await Purchase.findOne({ _id: req.params.id })
+            // different:
+            const quantity = req.body.quantity - currentPurchase.quantity
+            // set stock (quantity) when Purchase process:
+            const updateProduct = await Product.updateOne({ _id: currentPurchase.product_id }, { $inc: { stock: +quantity } })
+        }
 
+        // Update:
         const data = await Purchase.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
@@ -108,14 +111,16 @@ module.exports = {
             #swagger.tags = ["Purchases"]
             #swagger.summary = "Delete Purchase"
         */
-        // Get current stock quantity 
-        const currentPurchase = await Purchase.findOne({_id:req.params.id})
 
-        //Delete:
+        // get current stock quantity from the Purchase:
+        const currentPurchase = await Purchase.findOne({ _id: req.params.id })
+        // console.log(currentPurchase)
+
+        // Delete:
         const data = await Purchase.deleteOne({ _id: req.params.id })
 
-        //Set stock after Pruchase process
-        const updateProduct=await Product.updateOne({_id:currentPurchase.product_id}, {$inc: {stock:-currentPurchase.quantity}}) // increase : "stock" field
+        // set stock (quantity) when Purchase process:
+        const updateProduct = await Product.updateOne({ _id: currentPurchase.product_id }, { $inc: { stock: -currentPurchase.quantity } })
 
         res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,

@@ -14,32 +14,31 @@ const { mongoose } = require('../configs/dbConnection')
 
 const ProductSchema = new mongoose.Schema({
 
-   category_id:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:'Category',
-    required:true
-   },
+    category_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required: true
+    },
 
-   brand_id:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:'Brand',
-    required:true
-   },
+    brand_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Brand',
+        required: true
+    },
 
-   name:{
-    type:String,
-    trim:true,
-    required:true,
-   },
+    name: {
+        type: String,
+        trim: true,
+        required: true
+    },
 
-//    quantity:{
-//     type:Number,
-//     default: 0
-//    },
-
-    stock:{ //instead of quantity
-      type:Number,
-      default: 0
+    // quantity: {
+    //     type: Number,
+    //     default: 0
+    // },
+    stock: {
+        type: Number,
+        default: 0
     }
 
 }, { collection: 'products', timestamps: true})
@@ -48,7 +47,7 @@ const ProductSchema = new mongoose.Schema({
 // FOR REACT PROJECT:
 ProductSchema.pre('init', function (data) {
     data.id = data._id
-    data.createds = data.createdAt.toLocaleDateString('ie-ie')
+    data.createds = data.createdAt.toLocaleDateString('tr-tr')
 })
 /* ------------------------------------------------------- */
 module.exports = mongoose.model('Product', ProductSchema)

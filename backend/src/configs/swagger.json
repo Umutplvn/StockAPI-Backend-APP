@@ -56,7 +56,7 @@
           "Authentication"
         ],
         "summary": "Login",
-        "description": "Login with username (or email) and password to get simpleToken and JWT",
+        "description": "Login with username (or email) and password for get simpleToken and JWT",
         "parameters": [
           {
             "name": "body",
@@ -147,24 +147,68 @@
     },
     "/users/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Users"
+        ],
+        "summary": "List Users",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create User",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "1234"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test@site.com"
+                },
+                "first_name": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "last_name": {
+                  "type": "string",
+                  "example": "test"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Created"
           }
         }
       }
     },
     "/users/{id}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get Single User",
         "description": "",
         "parameters": [
           {
@@ -175,12 +219,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update User",
         "description": "",
         "parameters": [
           {
@@ -188,15 +236,49 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "1234"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test@site.com"
+                },
+                "first_name": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "last_name": {
+                  "type": "string",
+                  "example": "test"
+                }
+              }
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       },
       "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete User",
         "description": "",
         "parameters": [
           {
@@ -207,12 +289,19 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
       "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update User",
         "description": "",
         "parameters": [
           {
@@ -220,119 +309,87 @@
             "in": "path",
             "required": true,
             "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/tokens/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "post": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/tokens/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
+          },
           {
-            "name": "id",
-            "in": "path",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "1234"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test@site.com"
+                },
+                "first_name": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "last_name": {
+                  "type": "string",
+                  "example": "test"
+                }
+              }
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      },
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       }
     },
     "/stock/brands/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Brands"
+        ],
+        "summary": "List Brands",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "post": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Create Brand",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Brand"
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Created"
           }
         }
       }
     },
     "/stock/brands/{id}": {
       "get": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Get Single Brand",
         "description": "",
         "parameters": [
           {
@@ -343,12 +400,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "put": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Update Brand",
         "description": "",
         "parameters": [
           {
@@ -356,15 +417,27 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Brand"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       },
       "delete": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Delete Brand",
         "description": "",
         "parameters": [
           {
@@ -375,12 +448,19 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
       "patch": {
+        "tags": [
+          "Brands"
+        ],
+        "summary": "Update Brand",
         "description": "",
         "parameters": [
           {
@@ -388,35 +468,65 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Brand"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       }
     },
     "/stock/categories/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Categories"
+        ],
+        "summary": "List Categories",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Create Category",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Created"
           }
         }
       }
     },
     "/stock/categories/{id}": {
       "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get Single Category",
         "description": "",
         "parameters": [
           {
@@ -427,12 +537,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "put": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Update Category",
         "description": "",
         "parameters": [
           {
@@ -440,15 +554,27 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       },
       "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Delete Category",
         "description": "",
         "parameters": [
           {
@@ -459,12 +585,19 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
       "patch": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Update Category",
         "description": "",
         "parameters": [
           {
@@ -472,35 +605,65 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Category"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       }
     },
     "/stock/firms/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Firms"
+        ],
+        "summary": "List Firms",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "post": {
+        "tags": [
+          "Firms"
+        ],
+        "summary": "Create Firm",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Firm"
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Created"
           }
         }
       }
     },
     "/stock/firms/{id}": {
       "get": {
+        "tags": [
+          "Firms"
+        ],
+        "summary": "Get Single Firm",
         "description": "",
         "parameters": [
           {
@@ -511,12 +674,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "put": {
+        "tags": [
+          "Firms"
+        ],
+        "summary": "Update Firm",
         "description": "",
         "parameters": [
           {
@@ -524,15 +691,27 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Firm"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       },
       "delete": {
+        "tags": [
+          "Firms"
+        ],
+        "summary": "Delete Firm",
         "description": "",
         "parameters": [
           {
@@ -543,12 +722,19 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
       "patch": {
+        "tags": [
+          "Firms"
+        ],
+        "summary": "Update Firm",
         "description": "",
         "parameters": [
           {
@@ -556,35 +742,65 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Firm"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       }
     },
     "/stock/products/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "summary": "List Products",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create Product",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Created"
           }
         }
       }
     },
     "/stock/products/{id}": {
       "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get Single Product",
         "description": "",
         "parameters": [
           {
@@ -595,12 +811,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update Product",
         "description": "",
         "parameters": [
           {
@@ -608,15 +828,27 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       },
       "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Delete Product",
         "description": "",
         "parameters": [
           {
@@ -627,12 +859,19 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
       "patch": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update Product",
         "description": "",
         "parameters": [
           {
@@ -640,11 +879,19 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       }
@@ -788,24 +1035,46 @@
     },
     "/stock/sales/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Sales"
+        ],
+        "summary": "List Sales",
+        "description": "  You can send query with endpoint for search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "post": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Create Sale",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sale"
+            }
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Created"
           }
         }
       }
     },
     "/stock/sales/{id}": {
       "get": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Get Single Sale",
         "description": "",
         "parameters": [
           {
@@ -816,12 +1085,16 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
       "put": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Update Sale",
         "description": "",
         "parameters": [
           {
@@ -829,11 +1102,19 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sale"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       },
@@ -861,6 +1142,10 @@
         }
       },
       "patch": {
+        "tags": [
+          "Sales"
+        ],
+        "summary": "Update Sale",
         "description": "",
         "parameters": [
           {
@@ -868,11 +1153,19 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Sale"
+            }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "202": {
+            "description": "Accepted"
           }
         }
       }

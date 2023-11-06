@@ -29,23 +29,49 @@ dbConnection()
 // Accept JSON:
 app.use(express.json())
 
-// CORS- npm i cors  - Corss Origin Resource Sharing - To let Frontend Server to Connect Backend Server
-app.use(require('cors')({
-    "origin": ["http://localhost:5173/", "http://localhost:4173/", "http://localhost:3000/"]
-}))
+// CORS Middleware:
+// https://expressjs.com/en/resources/middleware/cors.html
+// npm i cors
 
-// app.use(cors({                                       =>Default Values
-//         "origin": "*",
-//         "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-//         "preflightContinue": false,
-//         "optionsSuccessStatus": 204
+// const cors = require('cors')
+// Default using:
+// app.use(cors())
+// Default options:
+// app.use(cors({
+//     "origin": "*",
+//     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     "preflightContinue": false,
+//     "optionsSuccessStatus": 204
 // }))
+/*
+
+    if (process.env.NODE_ENV=="development") {
+        const corsOptions = {}
+    } else {
+        const corsOptions = {}
+    }
+    app.use(cors(corsOptions))
+*/
+// app.use(cors({
+//     "origin": ["http://localhost:3000", "http://localhost:4173", "http://localhost:5173"], //"http://localhost:5173", // true // false // "*",
+//     // "origin": function (origin, callback) { },
+//     "methods": "GET, HEAD, PUT, PATCH, POST, DELETE",
+// }))
+/*
+    app.get('*', cors({ origin: 'onlyget.com' }))
+    app.all('*', cors({ origin: 'allmethods.com' }))
+*/
+
+// app.use(require('cors')()) // Run with defaults.
+app.use(require('cors')({
+    origin: ["http://localhost:3000", "http://localhost:4173", "http://localhost:5173"]
+}))
 
 // Call static uploadFile:
 app.use('/upload', express.static('./upload'))
 
 // Check Authentication:
-app.use(require('./src/middlewares/authentication'))    // checks if smo has logged in or not - not related with permissions
+app.use(require('./src/middlewares/authentication'))
 
 // Run Logger:
 app.use(require('./src/middlewares/logger'))
@@ -66,7 +92,7 @@ app.all('/', (req, res) => {
             redoc: '/documents/redoc',
             json: '/documents/json',
         },
-        user: req.user  //authentication.js
+        user: req.user
     })
 })
 

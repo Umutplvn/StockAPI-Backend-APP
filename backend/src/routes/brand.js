@@ -7,13 +7,12 @@ const router = require('express').Router()
 // routes/brand:
 
 const permissions = require('../middlewares/permissions')
-
 const brand = require('../controllers/brand')
 
 // URL: /brands
 
 router.route('/')
-    .get(permissions.isLogin, brand.list)
+    .get(permissions.isStaff, brand.list)
     .post(permissions.isStaff, brand.create)
 
 router.route('/:id')

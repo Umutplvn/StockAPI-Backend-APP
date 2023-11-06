@@ -3,69 +3,99 @@
     NODEJS EXPRESS | CLARUSWAY FullStack Team
 ------------------------------------------------------- */
 const { mongoose } = require('../configs/dbConnection')
+/* ------------------------------------------------------- *
+{
+    "username": "admin",
+    "password": "aA*123456",
+    "email": "admin@site.com",
+    "first_name": "admin",
+    "last_name": "admin",
+    "is_active": true,
+    "is_staff": true,
+    "is_superadmin": true
+}
+{
+    "username": "staff",
+    "password": "aA*123456",
+    "email": "staff@site.com",
+    "first_name": "staff",
+    "last_name": "staff",
+    "is_active": true,
+    "is_staff": true,
+    "is_superadmin": false
+}
+{
+    "username": "test",
+    "password": "aA*123456",
+    "email": "test@site.com",
+    "first_name": "test",
+    "last_name": "test",
+    "is_active": true,
+    "is_staff": false,
+    "is_superadmin": false
+}
 /* ------------------------------------------------------- */
+// User Model:
 
 const UserSchema = new mongoose.Schema({
 
-    username:{
-        type:String,
-        trim:true,
-        required:true,
-        unique:true,
-        index:true
+    username: {
+        type: String,
+        trim: true,
+        required: true,
+        unique: true,
+        index: true
     },
 
-    password:{
-        type:String,
-        trim:true,
-        required:true,
+    password: {
+        type: String,
+        trim: true,
+        required: true
     },
 
-    email:{
-        type:String,
-        trim:true,
-        required:true,
-        unique:true,
-        index:true
+    email: {
+        type: String,
+        trim: true,
+        required: true,
+        unique: true,
+        index: true
     },
 
-    first_name:{
-        type:String,
-        trim:true,
-        required:true,
+    first_name: {
+        type: String,
+        trim: true,
+        required: true
     },
 
-    last_name:{
-            type:String,
-            trim:true,
-            required:true,
+    last_name: {
+        type: String,
+        trim: true,
+        required: true
     },
 
-    is_active:{
-        type:Boolean,
-        default:true,
+    is_active: {
+        type: Boolean,
+        default: true
     },
 
-    is_staff:{
-        type:Boolean,
-        default:false,
+    is_staff: {
+        type: Boolean,
+        default: false
     },
 
-    is_superadmin:{
-        type:Boolean,
-        default:false,
-    }
+    is_superadmin: {
+        type: Boolean,
+        default: false
+    },
 
-},{collection:'users', timestamps:true})
+}, { collection: 'users', timestamps: true })
 
 /* ------------------------------------------------------- */
 // Schema Configs:
 
-//Validations for Password and Email
-
 const passwordEncrypt = require('../helpers/passwordEncrypt')
 
-UserSchema.pre(['save', 'updateOne'], function (next) {// It will be running the following steps prior to save or update  //https://mongoosejs.com/docs/middleware.html
+UserSchema.pre(['save', 'updateOne'], function (next) {
 
     // get data from "this" when create;
     // if process is updateOne, data will receive in "this._update"
@@ -80,7 +110,7 @@ UserSchema.pre(['save', 'updateOne'], function (next) {// It will be running the
 
         if (data?.password) {
 
-            // pass == (min 1: lowerCase + upperCase + number + @$!%*?& + min 8 chars)
+            // pass == (min 1: lowerCase, upperCase, Numeric, @$!%*?& + min 8 chars)
             const isPasswordValidated = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(data.password)
 
             if (isPasswordValidated) {
@@ -101,18 +131,12 @@ UserSchema.pre(['save', 'updateOne'], function (next) {// It will be running the
         next(new Error('Email not validated.'))
     }
 })
-
 /* ------------------------------------------------------- */
+// FOR REACT PROJECT:
+UserSchema.pre('init', function (data) {
 
-// As it was already asked in our React Project
-
-UserSchema.pre('init', function(data){  // 'init' => to send some additional data before the main data send to UI
-//The user asked us for two additional information called "id" and "createds", we already have these, but since we needed to change their names, we set it this way and sent it via pre('init'...).
-// We cant put id directly to our model as mongo get it as a field not specificly id
-// init command doesnt waste storage room in db
-    data.id = data._id,     
-    data.createds=data.createdAt.toLocaleDateString('ie-ie')
+    data.id = data._id
+    data.createds = data.createdAt.toLocaleDateString('tr-tr')
 })
-
 /* ------------------------------------------------------- */
 module.exports = mongoose.model('User', UserSchema)

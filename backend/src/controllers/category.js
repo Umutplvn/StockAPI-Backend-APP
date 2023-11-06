@@ -2,13 +2,14 @@
 /* -------------------------------------------------------
     NODEJS EXPRESS | CLARUSWAY FullStack Team
 ------------------------------------------------------- */
+// Category Controller:
 
 const Category = require('../models/category')
 
 module.exports = {
 
-    list: async(req, res)=>{
-         /*
+    list: async (req, res) => {
+        /*
             #swagger.tags = ["Categories"]
             #swagger.summary = "List Categories"
             #swagger.description = `
@@ -20,22 +21,21 @@ module.exports = {
                 </ul>
             `
         */
-    
+
         const data = await res.getModelList(Category)
 
         // res.status(200).send({
-        //     error:false,
-        //     details: await res.getModelList(Category),
+        //     error: false,
+        //     details: await res.getModelListDetails(Category),
         //     data
         // })
-
-        //As it was asked us to send the data directly unlike mentioned above
+        
+        // FOR REACT PROJECT:
         res.status(200).send(data)
-
     },
 
-    create: async(req, res)=>{
-       /*
+    create: async (req, res) => {
+        /*
             #swagger.tags = ["Categories"]
             #swagger.summary = "Create Category"
             #swagger.parameters['body'] = {
@@ -47,28 +47,27 @@ module.exports = {
 
         const data = await Category.create(req.body)
 
-            res.status(201).send({
-                error: false,
-                data
-            })
-        },
-
-    read: async(req, res)=>{
-         /*
-            #swagger.tags = ["Categories"]
-            #swagger.summary = "Get Single Category"
-        */
-
-        const data = await Category.findOne( {_id:req.params.id})
-
-        res.status(200).send({
-            error:false,
+        res.status(201).send({
+            error: false,
             data
         })
     },
 
-    update: async(req, res)=>{
+    read: async (req, res) => {
+        /*
+            #swagger.tags = ["Categories"]
+            #swagger.summary = "Get Single Category"
+        */
 
+        const data = await Category.findOne({ _id: req.params.id })
+
+        res.status(200).send({
+            error: false,
+            data
+        })
+    },
+
+    update: async (req, res) => {
         /*
             #swagger.tags = ["Categories"]
             #swagger.summary = "Update Category"
@@ -79,29 +78,26 @@ module.exports = {
             }
         */
 
-
-        const data = await Category.updateOne({_id:req.param.id}, req.body, { runValidators: true })  // If there is a validate function in our model and we want to use it while updating, we have to add it.
+        const data = await Category.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
-            error:false,
+            error: false,
             data,
-            new: await Category.findOne({_id:req.params.id})
+            new: await Category.findOne({ _id: req.params.id })
         })
     },
 
-    delete: async(req, res)=>{
-
+    delete: async (req, res) => {
         /*
             #swagger.tags = ["Categories"]
             #swagger.summary = "Delete Category"
         */
 
-        const data = await Category.deleteOne({_id:req.params.id})
+        const data = await Category.deleteOne({ _id: req.params.id })
 
         res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,
             data
         })
-        
     },
 }

@@ -2,13 +2,14 @@
 /* -------------------------------------------------------
     NODEJS EXPRESS | CLARUSWAY FullStack Team
 ------------------------------------------------------- */
+// Product Controller:
 
 const Product = require('../models/product')
 
 module.exports = {
 
-    list: async(req, res)=>{
-         /*
+    list: async (req, res) => {
+        /*
             #swagger.tags = ["Products"]
             #swagger.summary = "List Products"
             #swagger.description = `
@@ -20,21 +21,20 @@ module.exports = {
                 </ul>
             `
         */
-    
+
         const data = await res.getModelList(Product, {}, ['category_id', 'brand_id'])
 
         // res.status(200).send({
-        //     error:false,
-        //     details: await res.getModelList(Product),
+        //     error: false,
+        //     details: await res.getModelListDetails(Product),
         //     data
         // })
-
-        //As it was asked us to send the data directly unlike mentioned above
+        
+        // FOR REACT PROJECT:
         res.status(200).send(data)
-
     },
 
-    create: async(req, res)=>{
+    create: async (req, res) => {
         /*
             #swagger.tags = ["Products"]
             #swagger.summary = "Create Product"
@@ -47,66 +47,57 @@ module.exports = {
 
         const data = await Product.create(req.body)
 
-            res.status(201).send({
-                error: false,
-                data
-            })
-        },
-        
-    read: async(req, res)=>{
-         /*
-            #swagger.tags = ["Products"]
-            #swagger.summary = "Get Single Product"
-        */
-
-        const data = await Product.findOne( {_id:req.params.id}).populate(['category_id', 'brand_id'])
-
-        res.status(200).send({
-            error:false,
+        res.status(201).send({
+            error: false,
             data
         })
     },
 
-    update: async(req, res)=>{
+    read: async (req, res) => {
+        /*
+            #swagger.tags = ["Products"]
+            #swagger.summary = "Get Single Product"
+        */
 
+        const data = await Product.findOne({ _id: req.params.id }).populate(['category_id', 'brand_id'])
+
+        res.status(200).send({
+            error: false,
+            data
+        })
+    },
+
+    update: async (req, res) => {
         /*
             #swagger.tags = ["Products"]
             #swagger.summary = "Update Product"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
-                schema: {
-                    "Productname": "test",
-                    "password": "1234",
-                    "email": "test@site.com",
-                    "first_name": "test",
-                    "last_name": "test",
-                }
+                schema: { $ref: '#/definitions/Product' }
             }
         */
 
-        const data = await Product.updateOne({_id:req.param.id}, req.body, { runValidators: true })  // If there is a validate function in our model and we want to use it while updating, we have to add it.
+        const data = await Product.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
-            error:false,
+            error: false,
             data,
-            new: await Product.findOne({_id:req.params.id})
+            new: await Product.findOne({ _id: req.params.id })
         })
     },
 
-    delete: async(req, res)=>{
-
+    delete: async (req, res) => {
         /*
             #swagger.tags = ["Products"]
             #swagger.summary = "Delete Product"
         */
 
-        const data = await Product.deleteOne({_id:req.params.id})
+        const data = await Product.deleteOne({ _id: req.params.id })
 
         res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,
             data
         })
-        
     },
 }
